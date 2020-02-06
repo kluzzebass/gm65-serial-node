@@ -1,0 +1,22 @@
+{
+  "name": "gm65-serial-node",
+  "version": "1.0.0",
+  "description": "Node JS module for GM64 barcode readers in Serial-over-USB mode.",
+  "main": "index.js",
+  "scripts": {
+    "test": "node test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/kluzzebass/gm65-serial-node.git"
+  },
+  "author": "Jan Fredrik Leversund <kluzz@radical.org>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/kluzzebass/gm65-serial-node/issues"
+  },
+  "homepage": "https://github.com/kluzzebass/gm65-serial-node#readme",
+  "dependencies": {
+    "serialport": "^8.0.7"
+  }
+}
