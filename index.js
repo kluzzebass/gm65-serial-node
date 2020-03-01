@@ -25,10 +25,11 @@ const commands = {
 
 module.exports = (dev, options = {}) => {
     this.dev = dev
-    this.buf = Buffer.alloc(2048) // Probably enough...?
     this.port = null
 
     this.bitRate = (options.bitRate && bitRates.includes(options.bitRate)) || defaults.bitRate
+
+    this.onScan = options.onScan && options.onScan instanceof Function ? options.onScan : null
 
     this.port = new SerialPort(this.dev, {
         baudRate: this.bitRate,
@@ -45,7 +46,10 @@ module.exports = (dev, options = {}) => {
     })
 
     this.port.on('data', data => {
-        console.log(data)
+        // Ignore the confirmation message
+        if (!data.equals(commands.confirmation))
+          // Send data up until, but not including the first 0xd
+          this.onScan(data.slice(0, data.indexOf(0xd)).toString())
     })
 
     this.trigger = () => {
