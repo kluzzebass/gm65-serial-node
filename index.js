@@ -47,9 +47,13 @@ module.exports = (dev, options = {}) => {
 
     this.port.on('data', data => {
         // Ignore the confirmation message
-        if (!data.equals(commands.confirmation))
-          // Send data up until, but not including the first 0xd
-          this.onScan(data.slice(0, data.indexOf(0xd)).toString())
+        if (data.equals(commands.confirmation)) return
+
+        // Ignore the debug info message thing at the beginning of a connection
+        if (data.toString('ascii', 0, 2) === '<{') return
+
+        // Send data up until, but not including the first 0xd
+        this.onScan(data.slice(0, data.indexOf(0xd)).toString())
     })
 
     this.trigger = () => {
